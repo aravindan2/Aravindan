@@ -1,0 +1,125 @@
+---
+import type { Project } from '../data/projects';
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+const hasLinks = Boolean(project.repoUrl || project.demoUrl);
+---
+
+<article class="card">
+  <div class="card-header">
+    <h3 class="card-title">{project.title}</h3>
+    {
+      hasLinks && (
+        <div class="card-links">
+          {project.repoUrl && (
+            <a
+              href={project.repoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GitHub<span class="sr-only"> (opens in a new tab)</span>
+            </a>
+          )}
+          {project.demoUrl && (
+            <a
+              href={project.demoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Live Demo<span class="sr-only"> (opens in a new tab)</span>
+            </a>
+          )}
+        </div>
+      )
+    }
+  </div>
+
+  <p class="card-description">{project.description}</p>
+
+  <ul class="tags" aria-label={`Technologies used in ${project.title}`}>
+    {
+      project.technologies.map((technology) => (
+        <li class="tag">{technology}</li>
+      ))
+    }
+  </ul>
+</article>
+
+<style>
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    height: 100%;
+    padding: 1.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: border-color 180ms ease, background-color 180ms ease,
+      transform 180ms ease;
+  }
+
+  .card:hover {
+    border-color: var(--border-strong);
+    background: var(--surface-hover);
+    transform: translateY(-2px);
+  }
+
+  .card-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .card-title {
+    margin: 0;
+    font-size: 1.125rem;
+  }
+
+  .card-links {
+    display: flex;
+    gap: 0.875rem;
+    flex-shrink: 0;
+  }
+
+  .card-links a {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--accent);
+    white-space: nowrap;
+    transition: color 160ms ease;
+  }
+
+  .card-links a:hover {
+    color: var(--accent-strong);
+  }
+
+  .card-description {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.9375rem;
+    flex-grow: 1;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+  }
+
+  .tag {
+    padding: 0.25rem 0.625rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--bg-soft);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+</style>

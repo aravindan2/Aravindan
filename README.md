@@ -1,46 +1,87 @@
-# Astro Starter Kit: Basics
+# Aravindan Vemula — Personal Portfolio
 
-```sh
-npm create astro@latest -- --template basics
-```
+A minimal, dark-themed, single-page portfolio built with [Astro](https://astro.build),
+TypeScript, and vanilla CSS. Static output, no client-side framework, no extra
+dependencies.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
+## Structure
 
 ```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+src/
+├── components/
+│   ├── Navbar.astro        # Sticky navigation
+│   ├── Hero.astro          # Intro, "View Projects" CTA, profile links
+│   ├── ProjectCard.astro   # Reusable project card (title, description, tags, links)
+│   ├── SocialLinks.astro   # GitHub / LinkedIn / Email links (reused in hero + contact)
+│   └── Footer.astro
+├── data/
+│   └── projects.ts         # Typed project data — edit this to add projects/links
+├── layouts/
+│   └── Layout.astro        # Head, SEO/OG metadata, JSON-LD, skip link
+├── pages/
+│   └── index.astro         # All page sections (About, Projects, Experience, …)
+└── styles/
+    └── global.css          # Design tokens, reset, shared utilities
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## Commands
 
-## 🧞 Commands
+| Command           | Action                              |
+| :---------------- | :---------------------------------- |
+| `npm install`     | Install dependencies                |
+| `npm run dev`     | Start dev server at `localhost:4321`|
+| `npm run build`   | Build the production site to `dist/`|
+| `npm run preview` | Preview the production build        |
 
-All commands are run from the root of the project, from a terminal:
+## Editing content
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+- **Projects:** edit `src/data/projects.ts`. Each entry has optional `repoUrl`
+  and `demoUrl` fields — they render as GitHub / Live Demo links only when set,
+  so leave them out until a real URL exists.
+- **Everything else** (about text, experience, education, skills,
+  publications/certifications, contact details) lives in `src/pages/index.astro`.
 
-## 👀 Want to learn more?
+## Deployment: GitHub Pages
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+`.github/workflows/deploy.yml` builds the site and deploys it to GitHub Pages on
+every push to `master` (or manually via *Run workflow*).
+
+The workflow derives the Astro `site` and `base` values automatically, so it
+works for either repository layout — no config changes needed:
+
+| Repository type               | Example                                  | Result URL                          |
+| :---------------------------- | :--------------------------------------- | :---------------------------------- |
+| User/organization site        | `aravindan2/aravindan2.github.io`        | `https://aravindan2.github.io/`     |
+| Project repository            | `aravindan2/personal-website`            | `https://aravindan2.github.io/personal-website/` |
+
+### One-time repository settings
+
+1. Push this repository to GitHub (branch `master`).
+2. Open the repository on GitHub → **Settings → Pages**.
+3. Under **Build and deployment**, set **Source** to **GitHub Actions**.
+4. Push to `master` (or trigger the workflow from the **Actions** tab). The first
+   run takes a couple of minutes; the site URL appears in the workflow summary
+   and under **Settings → Pages**.
+
+No secrets or tokens are required — the workflow uses the built-in
+`GITHUB_TOKEN` via the standard `id-token: write` / `pages: write` permissions.
+
+### Building locally with a base path
+
+`astro.config.mjs` reads `SITE_URL` and `BASE_PATH` from the environment (set by
+CI). To emulate a project-site build locally on Linux/macOS:
+
+```sh
+SITE_URL=https://<owner>.github.io BASE_PATH=/<repo>/ npm run build
+```
+
+Note: on WSL, Windows-installed Node does not inherit exported bash environment
+variables, so use a Linux Node install or set the values directly in
+`astro.config.mjs` for that test.
+
+## Notes
+
+- Static-only: no database, auth, analytics, or contact form backend.
+- An `og:image` is intentionally omitted; add one (1200×630 PNG/JPG in `public/`)
+  and reference it in `src/layouts/Layout.astro` if share previews with an image
+  are wanted.

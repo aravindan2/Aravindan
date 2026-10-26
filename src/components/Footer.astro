@@ -1,0 +1,33 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <p class="footer-note">© {year} Aravindan Vemula</p>
+    <p class="footer-note">
+      Built with <a class="link" href="https://astro.build" target="_blank" rel="noopener noreferrer">Astro<span class="sr-only"> (opens in a new tab)</span></a>
+    </p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--border);
+    padding-block: 2rem;
+  }
+
+  .footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem 1.5rem;
+  }
+
+  .footer-note {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--text-faint);
+  }
+</style>

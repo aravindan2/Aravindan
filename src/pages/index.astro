@@ -1,11 +1,405 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import SocialLinks from '../components/SocialLinks.astro';
+import { projects } from '../data/projects';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const skillGroups = [
+  { name: 'Languages', items: ['Python', 'SQL'] },
+  {
+    name: 'ML / AI',
+    items: ['PyTorch', 'Transformers', 'scikit-learn', 'GraphRAG'],
+  },
+  {
+    name: 'Backend & Systems',
+    items: [
+      'FastAPI',
+      'Docker',
+      'Kubernetes',
+      'Kafka',
+      'Pulsar',
+      'Ray',
+      'WebAssembly',
+    ],
+  },
+  {
+    name: 'Data',
+    items: ['PostgreSQL', 'Neo4j', 'MinIO', 'MLflow'],
+  },
+];
+
+const credentials = [
+  {
+    group: 'Publications & Patents',
+    items: [
+      {
+        title:
+          'Optimized Neural Networks Yielding eXplainable Insights from ECG Signals-Based Data Streams',
+        meta: '2025',
+      },
+      {
+        title:
+          'Streamlined Data Pipeline for Real-Time Threat Detection and Model Inference',
+        meta: '2025',
+      },
+      {
+        title:
+          'Smart Glass for Assisting Visually Impaired Users with Voice Assistance',
+        meta: 'Patent No. 452885, 2023',
+      },
+    ],
+  },
+  {
+    group: 'Certifications',
+    items: [
+      { title: 'AWS Certified Solutions Architect – Associate', meta: 'AWS' },
+      { title: 'AWS Certified Cloud Practitioner', meta: 'AWS' },
+    ],
+  },
+];
 ---
 
 <Layout>
-	<Welcome />
+  <Hero />
+
+  <!-- About -->
+  <section class="section" id="about" aria-labelledby="about-title">
+    <div class="container">
+      <header class="section-header">
+        <span class="section-index" aria-hidden="true">01</span>
+        <h2 class="section-title" id="about-title">About</h2>
+      </header>
+
+      <div class="prose">
+        <p>
+          I'm a master's student in Computer Science at New York University,
+          expected to graduate in May 2027. I'm interested in software
+          engineering, machine learning, and distributed systems — particularly
+          problems where the three overlap.
+        </p>
+        <p>
+          Most of my recent work has been research-oriented but shaped by
+          production concerns: streaming data pipelines, containerized model
+          services, retrieval-augmented language model applications, and the
+          evaluation and experiment tracking that has to happen around them.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section class="section" id="projects" aria-labelledby="projects-title">
+    <div class="container">
+      <header class="section-header">
+        <span class="section-index" aria-hidden="true">02</span>
+        <h2 class="section-title" id="projects-title">Featured Projects</h2>
+        <p class="section-lede">
+          Systems and research projects across machine learning, streaming data,
+          and language model infrastructure.
+        </p>
+      </header>
+
+      <div class="project-grid">
+        {projects.map((project) => <ProjectCard project={project} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <section class="section" id="experience" aria-labelledby="experience-title">
+    <div class="container">
+      <header class="section-header">
+        <span class="section-index" aria-hidden="true">03</span>
+        <h2 class="section-title" id="experience-title">Experience</h2>
+      </header>
+
+      <article class="entry">
+        <div class="entry-meta">
+          <span class="entry-date">Jan 2024 – Aug 2025</span>
+        </div>
+        <div class="entry-body">
+          <h3 class="entry-title">Undergraduate Research Assistant</h3>
+          <p class="entry-org">Vellore Institute of Technology</p>
+          <ul class="entry-points">
+            <li>
+              Developed hybrid CNN-LSTM/GRU models for real-time IoT intrusion
+              detection using Kafka and PyFlink.
+            </li>
+            <li>Contributed to KNOXRT research published in 2025.</li>
+            <li>
+              Built deep learning pipelines for ECG signal classification with
+              hyperparameter optimization and explainability methods.
+            </li>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Education -->
+  <section class="section" id="education" aria-labelledby="education-title">
+    <div class="container">
+      <header class="section-header">
+        <span class="section-index" aria-hidden="true">04</span>
+        <h2 class="section-title" id="education-title">Education</h2>
+      </header>
+
+      <article class="entry">
+        <div class="entry-meta">
+          <span class="entry-date">Expected May 2027</span>
+        </div>
+        <div class="entry-body">
+          <h3 class="entry-title">Master of Science in Computer Science</h3>
+          <p class="entry-org">New York University</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section class="section" id="skills" aria-labelledby="skills-title">
+    <div class="container">
+      <header class="section-header">
+        <span class="section-index" aria-hidden="true">05</span>
+        <h2 class="section-title" id="skills-title">Skills</h2>
+      </header>
+
+      <div class="skill-grid">
+        {
+          skillGroups.map((group) => (
+            <div class="skill-group">
+              <h3 class="skill-group-name">{group.name}</h3>
+              <ul class="skill-list">
+                {group.items.map((item) => (
+                  <li class="skill-item">{item}</li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Research & Credentials -->
+  <section class="section" id="research" aria-labelledby="research-title">
+    <div class="container">
+      <header class="section-header">
+        <span class="section-index" aria-hidden="true">06</span>
+        <h2 class="section-title" id="research-title">Research &amp; Credentials</h2>
+      </header>
+
+      <div class="credential-grid">
+        {
+          credentials.map((block) => (
+            <div class="credential-group">
+              <h3 class="credential-group-name">{block.group}</h3>
+              <ul class="credential-list">
+                {block.items.map((item) => (
+                  <li class="credential-item">
+                    <span class="credential-title">{item.title}</span>
+                    <span class="credential-meta">{item.meta}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="section" id="contact" aria-labelledby="contact-title">
+    <div class="container">
+      <header class="section-header">
+        <span class="section-index" aria-hidden="true">07</span>
+        <h2 class="section-title" id="contact-title">Contact</h2>
+      </header>
+
+      <div class="prose">
+        <p>
+          Interested in collaborating or discussing an interesting engineering
+          problem? Feel free to reach out.
+        </p>
+      </div>
+
+      <p class="contact-email">
+        <a class="link" href="mailto:av4008@nyu.edu">av4008@nyu.edu</a>
+      </p>
+
+      <div class="contact-social">
+        <SocialLinks />
+      </div>
+    </div>
+  </section>
 </Layout>
+
+<style>
+  /* Prose */
+  .prose {
+    max-width: 68ch;
+  }
+
+  .prose p {
+    margin: 0 0 1.25rem;
+    color: var(--text-muted);
+    font-size: 1.0625rem;
+  }
+
+  .prose p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Projects */
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
+    gap: 1.25rem;
+  }
+
+  /* Experience / education entries */
+  .entry {
+    display: grid;
+    grid-template-columns: 11rem 1fr;
+    gap: 0.75rem 2rem;
+    padding-block: 0.5rem;
+  }
+
+  .entry-date {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--text-faint);
+    white-space: nowrap;
+  }
+
+  .entry-title {
+    margin: 0;
+    font-size: 1.125rem;
+  }
+
+  .entry-org {
+    margin: 0.25rem 0 0;
+    color: var(--accent);
+    font-size: 0.9375rem;
+  }
+
+  .entry-points {
+    margin-top: 1rem;
+    display: grid;
+    gap: 0.625rem;
+  }
+
+  .entry-points li {
+    position: relative;
+    padding-left: 1.25rem;
+    color: var(--text-muted);
+    font-size: 0.9688rem;
+  }
+
+  .entry-points li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.7em;
+    width: 0.375rem;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  /* Skills */
+  .skill-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+    gap: 1.5rem 2rem;
+  }
+
+  .skill-group-name,
+  .credential-group-name {
+    margin: 0 0 0.875rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+
+  .skill-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .skill-item {
+    padding: 0.3125rem 0.6875rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    transition: border-color 160ms ease, color 160ms ease;
+  }
+
+  .skill-item:hover {
+    border-color: var(--border-strong);
+    color: var(--text);
+  }
+
+  /* Credentials */
+  .credential-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+    gap: 2rem;
+  }
+
+  .credential-list {
+    display: grid;
+  }
+
+  .credential-item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.25rem 1.25rem;
+    padding-block: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .credential-item:first-child {
+    padding-top: 0;
+  }
+
+  .credential-title {
+    max-width: 46ch;
+    font-size: 0.9688rem;
+    color: var(--text);
+  }
+
+  .credential-meta {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-faint);
+    white-space: nowrap;
+  }
+
+  /* Contact */
+  .contact-email {
+    margin: 1.5rem 0 0;
+    font-size: clamp(1.125rem, 2.5vw, 1.375rem);
+  }
+
+  .contact-social {
+    margin-top: 1.5rem;
+  }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .entry {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+  }
+</style>
