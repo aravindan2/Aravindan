@@ -10,7 +10,12 @@ import { defineConfig } from 'astro/config';
 //
 // For a local production build with a project base path, run:
 //   SITE_URL=https://<owner>.github.io BASE_PATH=/<repo>/ npm run build
+// export default defineConfig({
+//   site: process.env.SITE_URL || undefined,
+//   base: process.env.BASE_PATH || '/',
+// });
+
+
 export default defineConfig({
-  site: process.env.SITE_URL || undefined,
-  base: process.env.BASE_PATH || '/',
+  site: 'https://aravindan2.github.io',
 });
